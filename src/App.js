@@ -4,11 +4,20 @@ import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "./components/loader/Loading.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Home from "./components/home/Home.jsx";
+import { trackVisitor } from "./services/visitorTracking";
 
 function App() {
   const [isLoading, setsLoading] = useState(false);
+
+  // Track visitor on app load
+  useEffect(() => {
+    // Track visitor asynchronously without blocking the app
+    trackVisitor().catch((error) => {
+      console.error('Visitor tracking failed:', error);
+    });
+  }, []);
 
   if (isLoading) {
     return <Loading />;

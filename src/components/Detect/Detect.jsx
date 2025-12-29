@@ -39,6 +39,9 @@ const Detect = ({ className, handleWords, start }) => {
   const [showLoadingModal, setShowLoadingModal] = useState(true);
   const [loadingStage, setLoadingStage] = useState("fetching");
   const [isReady, setIsReady] = useState(false);
+  
+  // Track if recognizer has been initialized to prevent re-loading
+  const isInitializedRef = useRef(false);
 
   if (
     process.env.NODE_ENV === "development" ||
@@ -117,9 +120,8 @@ const Detect = ({ className, handleWords, start }) => {
 
   const enableCam = useCallback(() => {
     if (!gestureRecognizer) {
-      setShowLoadingModal(true);
-      setIsReady(false);
-      setLoadingStage("loading");
+      // Don't show loading modal again, just return silently
+      // The initial loading modal will handle the loading state
       return;
     }
 
@@ -143,22 +145,31 @@ const Detect = ({ className, handleWords, start }) => {
   };
 
   useEffect(() => {
+    // Only proceed if gesture recognizer is loaded
     if (!gestureRecognizer) {
       return;
     }
 
-    if (start === true) {
-      
-      setWebcamRunning(start);
-      startTime = new Date();
-      requestRef.current = requestAnimationFrame(animate);
-    } else {
-      setWebcamRunning(start);
-      cancelAnimationFrame(requestRef.current);
+    // Only start/stop if the modal is closed (initial loading is complete)
+    if (!showLoadingModal) {
+      if (start === true) {
+        setWebcamRunning(start);
+        startTime = new Date();
+        requestRef.current = requestAnimationFrame(animate);
+      } else {
+        setWebcamRunning(start);
+        cancelAnimationFrame(requestRef.current);
+      }
     }
-  }, [start, gestureRecognizer, animate]);
+  }, [start, gestureRecognizer, animate, showLoadingModal]);
 
+  // Load gesture recognizer only once on mount
   useEffect(() => {
+    // Only load if not already initialized
+    if (isInitializedRef.current) {
+      return;
+    }
+
     async function loadGestureRecognizer() {
       try {
         setLoadingStage("fetching");
@@ -177,11 +188,12 @@ const Detect = ({ className, handleWords, start }) => {
               "https://firebasestorage.googleapis.com/v0/b/sign-language-ai.appspot.com/o/sign_language_recognizer_25-04-2023.task?alt=media&token=fce5727a-48a2-426a-be07-956964695cec",
           },
           numHands: 2,
-          runningMode: runningMode,
+          runningMode: "IMAGE", // Start with IMAGE mode
         });
         
         setLoadingStage("loading");
         setGestureRecognizer(recognizer);
+        isInitializedRef.current = true; // Mark as initialized
         
         // Small delay to show "ready" state
         setTimeout(() => {
@@ -195,7 +207,7 @@ const Detect = ({ className, handleWords, start }) => {
       }
     }
     loadGestureRecognizer();
-  }, [runningMode]);
+  }, []); // Empty dependency array - only run once on mount
 
   return (
     <>
