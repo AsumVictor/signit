@@ -2,10 +2,8 @@ import { LOAD_PROF, LOGIN_FAIL, LOGIN_REQ, LOGIN_SUCCESS, LOGOUT } from '../acti
 import Cookies from 'js-cookie';
 
 const initialState = {
-    accessToken: Cookies.get('sign-language-ai-access-token') ? Cookies.get('sign-language-ai-access-token') : null,
-
-    user: Cookies.get('sign-language-ai-user') ? JSON.parse(Cookies.get('sign-language-ai-user')) : null,
-    
+    accessToken: null,
+    user: null,
     loading: false
 }
 

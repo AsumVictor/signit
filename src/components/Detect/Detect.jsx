@@ -12,9 +12,8 @@ import { HAND_CONNECTIONS } from "@mediapipe/hands";
 
 import Webcam from "react-webcam";
 
-import { useDispatch, useSelector } from "react-redux";
-
 import TextToSpeech from "../voice/voiceSynthezer";
+import LoadingModal from "./LoadingModal";
 let startTime = "";
 
 const Detect = ({ className, handleWords, start }) => {
@@ -34,13 +33,12 @@ const Detect = ({ className, handleWords, start }) => {
 
   const [detectedData, setDetectedData] = useState([]);
 
-  const user = useSelector((state) => state.auth?.user);
-
-  const { accessToken } = useSelector((state) => state.auth);
-
-  const dispatch = useDispatch();
-
   const [currentImage, setCurrentImage] = useState(null);
+  
+  // Loading modal states
+  const [showLoadingModal, setShowLoadingModal] = useState(true);
+  const [loadingStage, setLoadingStage] = useState("fetching");
+  const [isReady, setIsReady] = useState(false);
 
   if (
     process.env.NODE_ENV === "development" ||
@@ -119,7 +117,9 @@ const Detect = ({ className, handleWords, start }) => {
 
   const enableCam = useCallback(() => {
     if (!gestureRecognizer) {
-      alert("Please wait for gestureRecognizer to load");
+      setShowLoadingModal(true);
+      setIsReady(false);
+      setLoadingStage("loading");
       return;
     }
 
@@ -136,14 +136,14 @@ const Detect = ({ className, handleWords, start }) => {
     gestureRecognizer,
     animate,
     detectedData,
-    user?.name,
-    user?.userId,
-    dispatch,
   ]);
+
+  const handleModalReady = () => {
+    setShowLoadingModal(false);
+  };
 
   useEffect(() => {
     if (!gestureRecognizer) {
-      alert("Please wait for gestureRecognizer to load");
       return;
     }
 
@@ -156,28 +156,55 @@ const Detect = ({ className, handleWords, start }) => {
       setWebcamRunning(start);
       cancelAnimationFrame(requestRef.current);
     }
-  }, [start]);
+  }, [start, gestureRecognizer, animate]);
 
   useEffect(() => {
     async function loadGestureRecognizer() {
-      const vision = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
-      );
-      const recognizer = await GestureRecognizer.createFromOptions(vision, {
-        baseOptions: {
-          modelAssetPath:
-            "https://firebasestorage.googleapis.com/v0/b/sign-language-ai.appspot.com/o/sign_language_recognizer_25-04-2023.task?alt=media&token=fce5727a-48a2-426a-be07-956964695cec",
-        },
-        numHands: 2,
-        runningMode: runningMode,
-      });
-      setGestureRecognizer(recognizer);
+      try {
+        setLoadingStage("fetching");
+        setShowLoadingModal(true);
+        setIsReady(false);
+
+        const vision = await FilesetResolver.forVisionTasks(
+          "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+        );
+        
+        setLoadingStage("initializing");
+        
+        const recognizer = await GestureRecognizer.createFromOptions(vision, {
+          baseOptions: {
+            modelAssetPath:
+              "https://firebasestorage.googleapis.com/v0/b/sign-language-ai.appspot.com/o/sign_language_recognizer_25-04-2023.task?alt=media&token=fce5727a-48a2-426a-be07-956964695cec",
+          },
+          numHands: 2,
+          runningMode: runningMode,
+        });
+        
+        setLoadingStage("loading");
+        setGestureRecognizer(recognizer);
+        
+        // Small delay to show "ready" state
+        setTimeout(() => {
+          setIsReady(true);
+          setLoadingStage("ready");
+        }, 500);
+      } catch (error) {
+        console.error("Error loading gesture recognizer:", error);
+        setLoadingStage("loading");
+        // Retry or show error message
+      }
     }
     loadGestureRecognizer();
   }, [runningMode]);
 
   return (
     <>
+      <LoadingModal
+        isOpen={showLoadingModal}
+        loadingStage={loadingStage}
+        isReady={isReady}
+        onReady={handleModalReady}
+      />
       <div className={`${className} bg-slate-400 rounded-3xl overflow-hidden`}>
         <div className=" w-full h-full  relative overflow-hidden rounded-3xl">
           <Webcam

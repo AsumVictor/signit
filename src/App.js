@@ -3,19 +3,12 @@ import "./App.css";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSelector } from "react-redux";
-import Login from "./components/login/login";
 import Loading from "./components/loader/Loading.jsx";
 import { useState } from "react";
 import Home from "./components/home/Home.jsx";
 
 function App() {
-  const { accessToken } = useSelector((state) => state.auth);
   const [isLoading, setsLoading] = useState(false);
-
-  if (!accessToken) {
-    return <Login />;
-  }
 
   if (isLoading) {
     return <Loading />;

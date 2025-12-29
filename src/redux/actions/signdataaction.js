@@ -25,24 +25,34 @@ import Cookies from "js-cookie";
 export const getSignData = () => async (dispatch) => {
   let signData = [];
 
-  const logedInUser = await JSON.parse(Cookies.get("sign-language-ai-user"));
-
-  async function getData(db) {
-    const noteCol = collection(db, "SignData");
-
-    const UserSpecificData = query(
-      noteCol,
-      where("userId", "==", logedInUser.userId)
-    );
-
-    const noteSnapshot = await getDocs(UserSpecificData);
-
-    const Data = noteSnapshot.docs.map((doc) => doc.data());
-
-    return Data;
+  // Check if user cookie exists, if not return empty array
+  const userCookie = Cookies.get("sign-language-ai-user");
+  if (!userCookie) {
+    dispatch({
+      type: GET_SIGN_DATA_SUCCESS,
+      payload: [],
+    });
+    return;
   }
 
   try {
+    const logedInUser = JSON.parse(userCookie);
+
+    async function getData(db) {
+      const noteCol = collection(db, "SignData");
+
+      const UserSpecificData = query(
+        noteCol,
+        where("userId", "==", logedInUser.userId)
+      );
+
+      const noteSnapshot = await getDocs(UserSpecificData);
+
+      const Data = noteSnapshot.docs.map((doc) => doc.data());
+
+      return Data;
+    }
+
     dispatch({
       type: GET_SIGN_DATA_REQ,
     });
