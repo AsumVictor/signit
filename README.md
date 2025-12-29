@@ -4,7 +4,7 @@
 
 ![SignIt Logo](public/logo_s.svg)
 
-**A web app that translates sign language alphabet gestures in real-time using computer vision and machine learning.**
+**A web application that recognizes sign language alphabet gestures in real-time using computer vision technology.**
 
 [![React](https://img.shields.io/badge/React-18.2.0-blue.svg)](https://reactjs.org/)
 [![MediaPipe](https://img.shields.io/badge/MediaPipe-Tasks%20Vision-orange.svg)](https://developers.google.com/mediapipe)
@@ -34,67 +34,69 @@
 
 ## Overview
 
-SignIt is a web application that helps people communicate. It recognizes sign language alphabet letters in real-time. The app uses a webcam to watch your hands. Then it turns your hand signs into text and speech.
+SignIt is a web application designed to recognize sign language alphabet letters in real-time. The application uses a webcam to capture hand gestures and identifies individual alphabet letters (A through Z) from American Sign Language. When a letter is recognized, the application displays it as text and can convert it to speech output.
 
-### What Makes SignIt Special
+This application focuses specifically on alphabet recognition and does not translate full sign language words or sentences. It is intended as a tool for learning and practicing sign language alphabet letters.
 
-- **Real-Time Processing**: The app recognizes sign language alphabet letters right away
-- **Modern Design**: The app looks nice and is easy to use
-- **Text-to-Speech**: The app speaks the letters it recognizes
-- **Works on Different Devices**: You can use it on phones, tablets, and computers
-- **High Accuracy**: The app is very good at recognizing signs
-- **No Login Needed**: Anyone can use it right away
+### Key Capabilities
+
+- **Real-Time Alphabet Recognition**: Recognizes sign language alphabet letters as gestures are performed
+- **Visual Feedback**: Displays hand landmarks and connections on the video feed
+- **Text Display**: Shows recognized alphabet letters as on-screen captions
+- **Text-to-Speech**: Converts recognized letters to audio output
+- **Cross-Platform Compatibility**: Works on desktop computers, tablets, and mobile devices
+- **No Authentication Required**: Accessible immediately without user accounts
 
 ---
 
 ## Features
 
-### Main Features
+### Core Functionality
 
-- **Real-Time Alphabet Recognition**: The app watches your webcam and recognizes sign language alphabet letters as you make them
-- **Visual Feedback**: The app shows dots and lines on your hands so you can see what it sees
-- **Text Display**: The app shows the letters it recognizes as text on the screen
-- **Text-to-Speech**: The app speaks the letters out loud
-- **Easy Controls**: You can start, stop, and change settings easily
+- **Real-Time Alphabet Recognition**: Captures video from a webcam and recognizes sign language alphabet letters as they are performed
+- **Hand Tracking Visualization**: Displays hand landmarks and connections overlaid on the video feed
+- **Text Captions**: Shows recognized alphabet letters as text on the screen
+- **Audio Output**: Converts recognized letters to speech using the Web Speech API
+- **Interactive Controls**: Provides start, pause, and caption toggle functionality
 
-### User Experience Features
+### User Interface Features
 
-- **Loading Screen**: A nice loading screen shows while the app gets ready
-- **Draggable Audio**: You can move the audio player around the screen
-- **Notifications**: The app tells you when something important happens
-- **Control Panel**: Easy buttons to control everything
+- **Loading Interface**: Displays a loading screen with progress indicators during initialization
+- **Draggable Components**: Audio visualizer can be repositioned on the screen
+- **Toast Notifications**: Displays user-friendly notifications for important events
+- **Control Toolbar**: Provides an intuitive control panel with clear icons and labels
 
 ---
 
 ## Technology Stack
 
-### Frontend
+### Frontend Framework
 
-- **React 18.2.0** - A tool for building websites
-- **Redux** - A tool for managing information in the app
-- **React Router** - A tool for moving between pages
-- **Tailwind CSS** - A tool for making things look nice
-- **Framer Motion** - A tool for animations
-- **React Webcam** - A tool for using your camera
+- **React 18.2.0** - JavaScript library for building user interfaces
+- **Redux** - State management library for managing application data
+- **React Router** - Routing library for navigation
+- **Tailwind CSS** - Utility-first CSS framework for styling
+- **Framer Motion** - Animation library for smooth transitions
+- **React Webcam** - React component for webcam integration
 
-### Machine Learning and Computer Vision
+### Computer Vision and Machine Learning
 
-- **MediaPipe Tasks Vision** - A tool that recognizes hand signs
-- **MediaPipe Hands** - A tool that finds and tracks your hands
-- **MediaPipe Drawing Utils** - A tool for drawing on the screen
+- **MediaPipe Tasks Vision** - Framework for gesture recognition
+- **MediaPipe Hands** - Hand tracking and landmark detection solution
+- **MediaPipe Drawing Utils** - Utilities for visualizing hand landmarks
 
-### Backend and Storage
+### Backend Services
 
-- **Firebase 9.19.1** - A tool for storing information
-  - Firestore - A place to store data
-  - Firebase Storage - A place to store files
+- **Firebase 9.19.1** - Backend-as-a-Service platform
+  - Firestore - NoSQL database for data storage
+  - Firebase Storage - Cloud storage for model files
 
-### Other Tools
+### Additional Libraries
 
-- **React Toastify** - A tool for showing messages
-- **Chart.js** - A tool for making charts
-- **React Icons** - A tool for showing icons
-- **UUID** - A tool for making unique IDs
+- **React Toastify** - Toast notification library
+- **Chart.js** - Charting library for data visualization
+- **React Icons** - Icon library for UI elements
+- **UUID** - Library for generating unique identifiers
 
 ---
 
@@ -188,7 +190,7 @@ App.js
    ↓
 4. Webcam captures video frames
    ↓
-5. MediaPipe processes frames → detects hands → recognizes gestures
+5. MediaPipe processes frames → detects hands → recognizes alphabet gestures
    ↓
 6. Detected alphabet letter sent to Home component
    ↓
@@ -201,38 +203,38 @@ App.js
 
 ## Installation
 
-### What You Need
+### Prerequisites
 
 - Node.js (version 14 or higher)
-- npm or yarn
-- A web browser that works with webcams
-- A webcam
+- npm or yarn package manager
+- Modern web browser with webcam support
+- Webcam device
 
-### Steps
+### Installation Steps
 
-1. **Get the code**
+1. **Clone the repository**
    ```bash
    git clone <repository-url>
    cd signit
    ```
 
-2. **Install the tools**
+2. **Install dependencies**
    ```bash
    npm install
    ```
 
-3. **Set up Firebase** (Optional - only if you want to save data)
-   - Open `src/firebase.js` and add your Firebase settings
-   - Make sure Firebase Storage rules are set up
+3. **Configure Firebase** (Optional - for data storage features)
+   - Update `src/firebase.js` with your Firebase configuration
+   - Ensure Firebase Storage rules are properly configured
 
-4. **Start the app**
+4. **Start the development server**
    ```bash
    npm start
    ```
 
-5. **Open in your browser**
-   - Go to `http://localhost:3000`
-   - Say yes when the browser asks to use your camera
+5. **Open in browser**
+   - Navigate to `http://localhost:3000`
+   - Grant camera permissions when prompted by the browser
 
 ---
 
@@ -240,29 +242,29 @@ App.js
 
 ### Getting Started
 
-1. **Open the App**
-   - Open the app in your web browser
-   - Wait for the loading screen to finish
+1. **Launch the Application**
+   - Open the application in your web browser
+   - Wait for the loading screen to complete initialization
 
-2. **Allow Camera Access**
-   - When the browser asks, click yes to let it use your webcam
+2. **Grant Camera Permissions**
+   - When prompted by your browser, allow access to your webcam
 
-3. **Start Recognizing Signs**
-   - Click the "Start" button
-   - Put your hands in front of the camera
-   - Make sign language alphabet letters with your hands
+3. **Start Recognition**
+   - Click the "Start" button in the toolbar
+   - Position your hands in front of the camera
+   - Perform sign language alphabet letters (A through Z)
 
-4. **See the Results**
-   - The letters you make will show up as text
-   - The app will speak the letters out loud
-   - You will see dots and lines on your hands on the screen
+4. **View Results**
+   - Recognized letters will appear as text captions
+   - Audio output will play automatically for each recognized letter
+   - Hand landmarks will be visualized on the video feed
 
-### Controls
+### Available Controls
 
-- **Start/Pause**: Turn recognition on or off
-- **Captions**: Show or hide the text on screen
-- **Settings**: Change app settings (coming soon)
-- **Record**: Record your session (coming soon)
+- **Start/Pause**: Toggle alphabet recognition on or off
+- **Captions**: Show or hide text captions on screen
+- **Settings**: Access application settings (feature in development)
+- **Record**: Record recognition session (feature in development)
 
 ---
 
@@ -322,148 +324,153 @@ signit/
 ## Key Components
 
 ### Detect Component
-This is the main part that does the work:
-- Takes video from your webcam
-- Uses MediaPipe to recognize hand signs
-- Draws dots and lines on your hands
-- Recognizes alphabet letters in real-time
+
+The core component responsible for alphabet recognition:
+- Captures video input from the webcam
+- Integrates with MediaPipe for gesture recognition
+- Visualizes hand landmarks and connections
+- Performs real-time alphabet letter recognition
 
 ### LoadingModal Component
-A nice loading screen that:
-- Shows progress while the app loads
-- Shows when the app is ready
-- Has a button to start using the app
+
+A loading interface that:
+- Displays loading progress during initialization
+- Shows different stages (fetching, initializing, loading)
+- Presents a ready state with an access button
+- Provides visual feedback during the loading process
 
 ### Home Component
-The main container that:
-- Holds all the other parts together
-- Keeps track of what is happening
-- Updates when new letters are recognized
+
+The main container component that:
+- Orchestrates all child components
+- Manages application state
+- Handles updates when alphabet letters are recognized
 
 ### TextSpeakerVisualizer
-Turns text into sound:
-- Makes the app speak the letters
-- Shows a visual wave when speaking
-- Can be moved around the screen
+
+Converts recognized text to audio output:
+- Generates speech from recognized alphabet letters
+- Displays a visual waveform during speech
+- Provides a draggable interface for repositioning
 
 ---
 
 ## How It Works
 
-### Recognition Steps
+### Recognition Process
 
 1. **Video Capture**
-   - Your webcam takes pictures very fast
-   - The app looks at each picture one by one
+   - The webcam captures video frames continuously
+   - Frames are processed sequentially in real-time
 
 2. **Hand Detection**
-   - The app looks for hands in the pictures
-   - It finds 21 special points on each hand
-   - It can find up to 2 hands at once
+   - MediaPipe Hands model detects hand presence in each frame
+   - Extracts 21 hand landmarks per detected hand
+   - Supports detection of up to two hands simultaneously
 
 3. **Gesture Recognition**
-   - The app looks at the hand points
-   - It compares them to sign language alphabet letters
-   - It figures out which letter you are making
+   - MediaPipe Gesture Recognizer analyzes hand landmark positions
+   - Compares hand configurations against a trained sign language alphabet model
+   - Returns the recognized alphabet letter with a confidence score
 
 4. **Visualization**
-   - The app draws dots on your hands
-   - It draws lines connecting the dots
-   - This helps you see what the app sees
+   - Hand landmarks are drawn on a canvas overlay
+   - Hand connections are displayed in real-time
+   - Provides visual feedback to help users understand what the system detects
 
-5. **Output**
-   - The app shows the letter as text
-   - The app speaks the letter out loud
-   - You can see and hear what letter you made
+5. **Output Generation**
+   - Recognized letters are displayed as text captions
+   - Text is converted to speech using the Web Speech API
+   - Audio visualizer indicates when speech is active
 
-### Technical Details
+### Technical Specifications
 
-- **Model**: A special computer program trained to recognize sign language alphabet letters
-- **Processing**: The app works very fast so you see results right away
-- **Accuracy**: The app is good at recognizing letters from A to Z
-- **Speed**: The app works in real-time so there is no delay
+- **Model**: MediaPipe Gesture Recognizer trained on sign language alphabet gestures
+- **Processing**: Real-time video processing using requestAnimationFrame
+- **Scope**: Recognizes individual alphabet letters (A through Z)
+- **Performance**: Low-latency processing for real-time recognition
 
 ---
 
 ## Development
 
-### Commands You Can Use
+### Available Scripts
 
 ```bash
-# Start the app for development
+# Start development server
 npm start
 
-# Build the app for production
+# Build for production
 npm run build
 
 # Run tests
 npm test
 
-# Eject from Create React App (cannot be undone)
+# Eject from Create React App (irreversible)
 npm run eject
 ```
 
 ### Environment Variables
 
-Create a file called `.env` to store settings:
+Create a `.env` file for environment-specific configurations:
 
 ```env
 REACT_APP_FIREBASE_KEY=your_firebase_key
 ```
 
-### Code Style
+### Code Style Guidelines
 
-- Follow React best practices
-- Use functional components with hooks
-- Use the same naming style everywhere
-- Add comments to explain hard parts
+- Follow React best practices and conventions
+- Use functional components with React hooks
+- Maintain consistent naming conventions throughout the codebase
+- Add comments to explain complex logic and algorithms
 
 ---
 
 ## Contributing
 
-We welcome help! Here is how to contribute:
+Contributions are welcome. Please follow these steps:
 
 1. Fork the repository
-2. Create a new branch (`git checkout -b feature/AmazingFeature`)
-3. Save your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Send your changes (`git push origin feature/AmazingFeature`)
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-### How to Contribute
+### Contribution Guidelines
 
-- Write clear messages when you save changes
-- Follow the same code style
-- Add tests for new features
-- Update this file when you add new things
+- Write clear and descriptive commit messages
+- Follow the existing code style and conventions
+- Add tests for new features when applicable
+- Update documentation as needed
 
 ---
 
 ## License
 
-This project uses the MIT License. See the LICENSE file for more information.
+This project is licensed under the MIT License. See the LICENSE file for details.
 
 ---
 
 ## Acknowledgments
 
-- **Google MediaPipe** - For the gesture recognition tool
-- **React Community** - For the React tools
-- **Firebase** - For storing data
-- **Tailwind CSS** - For making things look nice
+- **Google MediaPipe** - For providing the gesture recognition framework
+- **React Community** - For the comprehensive React ecosystem
+- **Firebase** - For backend infrastructure and services
+- **Tailwind CSS** - For the utility-first CSS framework
 
 ---
 
 ## Contact and Support
 
-If you have questions or find problems, please open an issue on the GitHub repository.
+For questions, issues, or contributions, please open an issue on the GitHub repository.
 
 ---
 
 <div align="center">
 
-**Made for the Deaf community**
+**Designed for sign language alphabet learning and practice**
 
-Star this repo if you find it helpful!
+Star this repository if you find it helpful.
 
 </div>
